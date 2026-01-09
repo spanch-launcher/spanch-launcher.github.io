@@ -1,6 +1,191 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лёня — Official Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ffcc; /* Неоновый бирюзовый */
+            --dark: #0a0a0a;
+            --card-bg: #161616;
+            --text: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Задний фон с эффектом свечения */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -20%, #00ffcc33, transparent 50%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 10px;
+            background: linear-gradient(to bottom, #fff 30%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #888;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Сетка с карточками (Bento Grid) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 200px;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 24px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.1);
+        }
+
+        .card h3 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .span-2 { grid-column: span 2; }
+        .row-2 { grid-row: span 2; }
+
+        .big-text {
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: var(--primary);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .contact-btn:hover {
+            filter: brightness(1.2);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .stat-num {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 3rem;
+            display: block;
+        }
+
+        /* Мобильная версия */
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+            .span-2, .row-2 { grid-column: auto; grid-row: auto; }
+            h1 { font-size: 4rem; }
+        }
+    </style>
+</head>
 <body>
-  <h1>Леня бот съел кмааааапот</h1>
+
+    <div class="bg-glow"></div>
+
+    <div class="container">
+        <header>
+            <p class="tagline">The Legend</p>
+            <h1>ЛЁНЯ</h1>
+        </header>
+
+        <main class="grid">
+            <div class="card span-2">
+                <h3>Кто такой Лёня?</h3>
+                <p class="big-text">Человек, который делает вещи красиво. Тот самый Лёня, о котором ходят легенды, и чьё присутствие делает любой чат лучше на 100%.</p>
+            </div>
+
+            <div class="card">
+                <h3>Статус</h3>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 12px; height: 12px; background: #00ff00; border-radius: 50%; box-shadow: 0 0 10px #00ff00;"></div>
+                    <span>В сети и заряжен</span>
+                </div>
+            </div>
+
+            <div class="card row-2">
+                <h3>Скиллы</h3>
+                <ul style="list-style: none; color: #888; line-height: 2;">
+                    <li>— Харизма 100/100</li>
+                    <li>— Стиль 80lvl</li>
+                    <li>— Решение вопросов</li>
+                    <li>— Создание вайба</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <span class="stat-num">∞</span>
+                <p>Уровень крутости</p>
+            </div>
+
+            <div class="card span-2" style="justify-content: space-between; flex-direction: row; align-items: center;">
+                <div>
+                    <h3>На связи?</h3>
+                    <p>Если Лёня нужен — Лёня ответит.</p>
+                </div>
+                <a href="https://t.me/твой_ник" class="contact-btn">Написать</a>
+            </div>
+        </main>
+    </div>
+
 </body>
 </html>
