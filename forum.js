@@ -39,8 +39,8 @@ function initForum() {
     // Показываем информацию о пользователе
     updateUserInfo(user);
     
-    // Очищаем все темы
-    localStorage.setItem('forumTopics', JSON.stringify([]));
+    // НЕ очищаем темы - админ сам будет добавлять
+    // localStorage.setItem('forumTopics', JSON.stringify([]));
     
     loadCategories();
 }
