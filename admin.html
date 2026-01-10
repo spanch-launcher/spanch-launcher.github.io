@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель администратора - NLRP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>NLRP</h1>
+                <span>Next Live Role Play</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Главная</a></li>
+                <li><a href="index.html#about">О сервере</a></li>
+                <li><a href="index.html#features">Особенности</a></li>
+                <li><a href="forum.html">Форум</a></li>
+                <li><a href="index.html#rules">Правила</a></li>
+                <li><a href="index.html#donate">Донат</a></li>
+            </ul>
+            <div class="nav-buttons" id="navButtons">
+                <a href="index.html" class="btn btn-secondary">На главную</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Панель администратора -->
+    <section class="admin-panel">
+        <div class="container">
+            <h1 class="section-title">Панель администратора</h1>
+            <p class="section-subtitle">Управление пользователями и их ролями</p>
+
+            <!-- Список пользователей -->
+            <div class="admin-content">
+                <div class="admin-header">
+                    <h2>Список пользователей</h2>
+                    <button class="btn btn-primary" onclick="refreshUsers()">🔄 Обновить</button>
+                </div>
+
+                <div class="users-table">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Логин</th>
+                                <th>Игровой ник</th>
+                                <th>Текущая роль</th>
+                                <th>Дата регистрации</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Пользователи будут загружены через JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно для изменения роли -->
+    <div id="roleModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRoleModal()">&times;</span>
+            <h2>Изменить роль пользователя</h2>
+            <div class="role-form">
+                <p><strong>Пользователь:</strong> <span id="modalUsername"></span></p>
+                <p><strong>Игровой ник:</strong> <span id="modalNickname"></span></p>
+                <div class="form-group">
+                    <label for="newRole">Новая роль:</label>
+                    <select id="newRole">
+                        <option value="player">🎮 Игрок</option>
+                        <option value="admin">👑 Администратор</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" onclick="changeUserRole()">Изменить роль</button>
+                    <button class="btn btn-secondary" onclick="closeRoleModal()">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NLRP</h3>
+                    <p>Лучший ролевой сервер GTA V</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Ссылки</h4>
+                    <ul>
+                        <li><a href="index.html#home">Главная</a></li>
+                        <li><a href="index.html#about">О сервере</a></li>
+                        <li><a href="index.html#rules">Правила</a></li>
+                        <li><a href="index.html#donate">Донат</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Сообщество</h4>
+                    <ul>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">VK</a></li>
+                        <li><a href="#">Telegram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Поддержка</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="forum.html">Форум</a></li>
+                        <li><a href="#">Тикеты</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NLRP. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="admin.js"></script>
+</body>
+</html>
