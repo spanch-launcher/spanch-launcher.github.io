@@ -22,8 +22,8 @@
                 <li><a href="#rules">Правила</a></li>
                 <li><a href="#donate">Донат</a></li>
             </ul>
-            <div class="nav-buttons">
-                <a href="#play" class="btn btn-primary">Играть</a>
+            <div class="nav-buttons" id="navButtons">
+                <a href="auth.html" class="btn btn-primary">Вход</a>
             </div>
         </div>
     </nav>
@@ -102,7 +102,7 @@
                     <div class="feature-icon"><img src="bag-removebg-preview.png" alt="Фракции"></div>
                     <div class="feature-content">
                         <h3>Система фракций</h3>
-                        <p>Полиция, EMS, банды, мафия - выбирай свой путь</p>
+                        <p>ГИБДД, EMS, банды, мафия - выбирай свой путь</p>
                     </div>
                 </div>
                 <div class="feature-item">
@@ -280,6 +280,28 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Проверка авторизации на главной странице
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const navButtons = document.getElementById('navButtons');
+            
+            if (currentUser) {
+                navButtons.innerHTML = `
+                    <div class="user-info">
+                        <span>👤 ${currentUser.nickname}</span>
+                        <span class="user-role">${currentUser.role === 'admin' ? '👑 Администратор' : '🎮 Игрок'}</span>
+                        ${currentUser.role === 'admin' ? '<a href="admin.html" class="btn btn-secondary">Панель админа</a>' : ''}
+                        <button class="btn btn-secondary" onclick="logout()">Выход</button>
+                    </div>
+                `;
+            }
+        });
+        
+        function logout() {
+            localStorage.removeItem('currentUser');
+            location.reload();
+        }
+    </script>
 </body>
 </html>
-
