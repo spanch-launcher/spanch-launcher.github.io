@@ -103,6 +103,12 @@ body {
     grid-row: 1;
 }
 
+.logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
 .logo h1 {
     font-size: 1.75rem;
     background: var(--gradient-1);
