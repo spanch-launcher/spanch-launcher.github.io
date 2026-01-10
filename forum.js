@@ -153,7 +153,7 @@ function openTopic(topicId) {
     
     html += '</div>';
     
-    // Форма ответа для админов и основателя
+    // Форма ответа только для админов и основателя
     if (user.role === 'admin' || user.role === 'founder') {
         html += `
             <div class="reply-form">
@@ -169,8 +169,9 @@ function openTopic(topicId) {
     } else {
         html += `
             <div class="reply-form">
-                <p style="color: var(--text-secondary); text-align: center; padding: 1rem;">
-                    Только администраторы и основатель могут отвечать на темы
+                <p style="color: var(--text-secondary); text-align: center; padding: 1.5rem; background: var(--card-bg); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                    ℹ️ Только администраторы и основатель могут отвечать на темы.<br>
+                    Вы можете создавать свои темы, нажав кнопку "Создать тему".
                 </p>
             </div>
         `;
@@ -215,10 +216,7 @@ function addReply(event, topicId) {
 // Показать форму создания темы
 function showCreateTopicForm() {
     const user = getCurrentUser();
-    if (user.role !== 'admin' && user.role !== 'founder') {
-        alert('Только администраторы и основатель могут создавать темы!');
-        return;
-    }
+    // Все пользователи могут создавать темы
     
     // Populate category dropdown dynamically
     const categorySelect = document.getElementById('topicCategory');
@@ -240,10 +238,7 @@ function createTopic(event) {
     event.preventDefault();
     
     const user = getCurrentUser();
-    if (user.role !== 'admin' && user.role !== 'founder') {
-        alert('Только администраторы и основатель могут создавать темы!');
-        return;
-    }
+    // Все пользователи могут создавать темы
     
     const topics = JSON.parse(localStorage.getItem('forumTopics')) || [];
     const newTopic = {
