@@ -73,7 +73,7 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 3rem;
 }
 
 .nav-menu a {
@@ -1434,12 +1434,12 @@ html {
 }
 
 .hero-character-left {
-    left: 5%;
+    left: 0;
     animation: slideInLeft 1s ease-out;
 }
 
 .hero-character-right {
-    right: 5%;
+    right: 0;
     animation: slideInRight 1s ease-out;
 }
 
@@ -1478,11 +1478,11 @@ html {
     }
     
     .hero-character-left {
-        left: 2%;
+        left: 0;
     }
     
     .hero-character-right {
-        right: 2%;
+        right: 0;
     }
 }
 
