@@ -290,8 +290,8 @@
                 navButtons.innerHTML = `
                     <div class="user-info">
                         <span>👤 ${currentUser.nickname}</span>
-                        <span class="user-role">${currentUser.role === 'admin' ? '👑 Администратор' : '🎮 Игрок'}</span>
-                        ${currentUser.role === 'admin' ? '<a href="admin.html" class="btn btn-secondary">Панель админа</a>' : ''}
+                        <span class="user-role">${currentUser.role === 'founder' ? '⭐ Основатель' : currentUser.role === 'admin' ? '👑 Администратор' : '🎮 Игрок'}</span>
+                        ${currentUser.role === 'admin' || currentUser.role === 'founder' ? '<a href="admin.html" class="btn btn-secondary">Панель админа</a>' : ''}
                         <button class="btn btn-secondary" onclick="logout()">Выход</button>
                     </div>
                 `;
