@@ -9,70 +9,38 @@ const forumCategories = {
     bugs: { name: '🐛 Баги и предложения', icon: '🐛', description: 'Сообщи о баге или предложи улучшение' }
 };
 
-// Инициализация форума с примерами тем
-function initForum() {
-    let topics = JSON.parse(localStorage.getItem('forumTopics')) || [];
-    
-    // Добавляем примеры тем, если форум пустой
-    if (topics.length === 0) {
-        topics = [
-            {
-                id: 1,
-                category: 'general',
-                title: 'Как быстро заработать первые деньги?',
-                author: 'Новичок2024',
-                message: 'Привет всем! Только начал играть на сервере. Подскажите, какие работы лучше всего подходят для новичков? Хочу быстро накопить на первую машину.',
-                date: new Date('2024-01-08').toLocaleString('ru-RU'),
-                replies: [
-                    { author: 'ПроИгрок', message: 'Советую начать с таксиста или курьера. Платят неплохо и не требуют особых навыков.', date: new Date('2024-01-08').toLocaleString('ru-RU') },
-                    { author: 'Veteran123', message: 'Еще можно попробовать рыбалку, там спокойно и стабильно зарабатываешь.', date: new Date('2024-01-09').toLocaleString('ru-RU') }
-                ]
-            },
-            {
-                id: 2,
-                category: 'team',
-                title: 'Ищу напарника для ограблений',
-                author: 'CrimeBoss',
-                message: 'Ищу опытного игрока для совместных ограблений. Желательно с микрофоном и знанием механик. Делим добычу 50/50.',
-                date: new Date('2024-01-09').toLocaleString('ru-RU'),
-                replies: [
-                    { author: 'ShadowMan', message: 'Интересно! Пишу в Discord: ShadowMan#1234', date: new Date('2024-01-09').toLocaleString('ru-RU') }
-                ]
-            },
-            {
-                id: 3,
-                category: 'factions',
-                title: 'Набор в полицию LSPD',
-                author: 'ChiefPolice',
-                message: 'Департамент полиции Лос-Сантоса объявляет набор новых сотрудников! Требования: возраст персонажа от 18 лет, отсутствие судимостей, активность минимум 3 часа в день. Обращаться в мэрию.',
-                date: new Date('2024-01-07').toLocaleString('ru-RU'),
-                replies: []
-            },
-            {
-                id: 4,
-                category: 'trade',
-                title: 'Продаю Elegy Retro Custom',
-                author: 'CarDealer',
-                message: 'Продаю Elegy Retro Custom в отличном состоянии. Полный тюнинг, все улучшения. Цена: 850,000$. Торг уместен.',
-                date: new Date('2024-01-10').toLocaleString('ru-RU'),
-                replies: [
-                    { author: 'Buyer1', message: 'За 750к возьму прямо сейчас', date: new Date('2024-01-10').toLocaleString('ru-RU') }
-                ]
-            },
-            {
-                id: 5,
-                category: 'help',
-                title: 'Не могу зайти на сервер',
-                author: 'HelpMe',
-                message: 'При попытке зайти на сервер выдает ошибку подключения. Что делать?',
-                date: new Date('2024-01-10').toLocaleString('ru-RU'),
-                replies: [
-                    { author: 'TechSupport', message: 'Попробуй перезапустить FiveM и проверь интернет-соединение.', date: new Date('2024-01-10').toLocaleString('ru-RU') }
-                ]
-            }
-        ];
-        localStorage.setItem('forumTopics', JSON.stringify(topics));
+// Проверка авторизации
+function checkAuth() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!currentUser) {
+        alert('Необходимо войти в аккаунт!');
+        window.location.href = 'auth.html';
+        return null;
     }
+    return currentUser;
+}
+
+// Получить текущего пользователя
+function getCurrentUser() {
+    return JSON.parse(localStorage.getItem('currentUser'));
+}
+
+// Выход
+function logout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = 'auth.html';
+}
+
+// Инициализация форума
+function initForum() {
+    const user = checkAuth();
+    if (!user) return;
+    
+    // Показываем информацию о пользователе
+    updateUserInfo(user);
+    
+    // Очищаем все темы
+    localStorage.setItem('forumTopics', JSON.stringify([]));
     
     loadCategories();
 }
@@ -151,6 +119,7 @@ function openCategory(categoryKey) {
 function openTopic(topicId) {
     const topics = JSON.parse(localStorage.getItem('forumTopics')) || [];
     const topic = topics.find(t => t.id === topicId);
+    const user = getCurrentUser();
     
     if (!topic) return;
     
@@ -158,7 +127,7 @@ function openTopic(topicId) {
         <div class="topic-detail">
             <h2>${topic.title}</h2>
             <div class="topic-meta">
-                <span>👤 ${topic.author}</span>
+                <span>� $${topic.author} ${topic.authorRole === 'admin' ? '<span class="admin-badge">👑 Админ</span>' : ''}</span>
                 <span>📅 ${topic.date}</span>
             </div>
             <div class="topic-message">
@@ -173,7 +142,7 @@ function openTopic(topicId) {
         topic.replies.forEach(reply => {
             html += `
                 <div class="reply-item">
-                    <div class="reply-author">👤 ${reply.author}</div>
+                    <div class="reply-author">👤 ${reply.author} ${reply.authorRole === 'admin' ? '<span class="admin-badge">👑 Админ</span>' : ''}</div>
                     <div class="reply-date">📅 ${reply.date}</div>
                     <div class="reply-message">${reply.message}</div>
                 </div>
@@ -183,23 +152,32 @@ function openTopic(topicId) {
         html += '<p style="color: var(--text-secondary); text-align: center; padding: 1rem;">Пока нет ответов</p>';
     }
     
-    html += `
-            </div>
-            
+    html += '</div>';
+    
+    // Форма ответа только для админов
+    if (user.role === 'admin') {
+        html += `
             <div class="reply-form">
                 <h3>Ответить</h3>
                 <form onsubmit="addReply(event, ${topicId})">
-                    <div class="form-group">
-                        <input type="text" id="replyAuthor" placeholder="Ваш ник" required>
-                    </div>
                     <div class="form-group">
                         <textarea id="replyMessage" rows="4" placeholder="Ваш ответ..." required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Отправить ответ</button>
                 </form>
             </div>
-        </div>
-    `;
+        `;
+    } else {
+        html += `
+            <div class="reply-form">
+                <p style="color: var(--text-secondary); text-align: center; padding: 1rem;">
+                    Только администраторы могут отвечать на темы
+                </p>
+            </div>
+        `;
+    }
+    
+    html += '</div>';
     
     document.getElementById('topicContent').innerHTML = html;
     document.getElementById('topicView').style.display = 'block';
@@ -210,7 +188,12 @@ function openTopic(topicId) {
 function addReply(event, topicId) {
     event.preventDefault();
     
-    const author = document.getElementById('replyAuthor').value;
+    const user = getCurrentUser();
+    if (user.role !== 'admin') {
+        alert('Только администраторы могут отвечать на темы!');
+        return;
+    }
+    
     const message = document.getElementById('replyMessage').value;
     
     const topics = JSON.parse(localStorage.getItem('forumTopics')) || [];
@@ -219,7 +202,8 @@ function addReply(event, topicId) {
     if (topic) {
         if (!topic.replies) topic.replies = [];
         topic.replies.push({
-            author,
+            author: user.nickname,
+            authorRole: user.role,
             message,
             date: new Date().toLocaleString('ru-RU')
         });
@@ -231,6 +215,11 @@ function addReply(event, topicId) {
 
 // Показать форму создания темы
 function showCreateTopicForm() {
+    const user = getCurrentUser();
+    if (user.role !== 'admin') {
+        alert('Только администраторы могут создавать темы!');
+        return;
+    }
     document.getElementById('createTopicModal').style.display = 'block';
 }
 
@@ -238,12 +227,19 @@ function showCreateTopicForm() {
 function createTopic(event) {
     event.preventDefault();
     
+    const user = getCurrentUser();
+    if (user.role !== 'admin') {
+        alert('Только администраторы могут создавать темы!');
+        return;
+    }
+    
     const topics = JSON.parse(localStorage.getItem('forumTopics')) || [];
     const newTopic = {
         id: Date.now(),
         category: document.getElementById('topicCategory').value,
         title: document.getElementById('topicTitle').value,
-        author: document.getElementById('authorName').value,
+        author: user.nickname,
+        authorRole: user.role,
         message: document.getElementById('topicMessage').value,
         date: new Date().toLocaleString('ru-RU'),
         replies: []
@@ -280,3 +276,21 @@ function closeTopicView() {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', initForum);
+
+
+// Обновить информацию о пользователе
+function updateUserInfo(user) {
+    const userInfoHTML = `
+        <div class="user-info">
+            <span>👤 ${user.nickname}</span>
+            <span class="user-role">${user.role === 'admin' ? '👑 Администратор' : '🎮 Игрок'}</span>
+            <button class="btn btn-secondary" onclick="logout()">Выход</button>
+        </div>
+    `;
+    
+    // Добавляем информацию о пользователе в навигацию
+    const navButtons = document.querySelector('.nav-buttons');
+    if (navButtons) {
+        navButtons.innerHTML = userInfoHTML;
+    }
+}
