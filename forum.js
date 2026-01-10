@@ -127,7 +127,7 @@ function openTopic(topicId) {
         <div class="topic-detail">
             <h2>${topic.title}</h2>
             <div class="topic-meta">
-                <span>� $${topic.author} ${topic.authorRole === 'admin' ? '<span class="admin-badge">👑 Админ</span>' : ''}</span>
+                <span>👤 ${topic.author} ${topic.authorRole === 'founder' ? '<span class="founder-badge">⭐ Основатель</span>' : topic.authorRole === 'admin' ? '<span class="admin-badge">👑 Админ</span>' : ''}</span>
                 <span>📅 ${topic.date}</span>
             </div>
             <div class="topic-message">
@@ -142,7 +142,7 @@ function openTopic(topicId) {
         topic.replies.forEach(reply => {
             html += `
                 <div class="reply-item">
-                    <div class="reply-author">👤 ${reply.author} ${reply.authorRole === 'admin' ? '<span class="admin-badge">👑 Админ</span>' : ''}</div>
+                    <div class="reply-author">👤 ${reply.author} ${reply.authorRole === 'founder' ? '<span class="founder-badge">⭐ Основатель</span>' : reply.authorRole === 'admin' ? '<span class="admin-badge">👑 Админ</span>' : ''}</div>
                     <div class="reply-date">📅 ${reply.date}</div>
                     <div class="reply-message">${reply.message}</div>
                 </div>
@@ -154,8 +154,8 @@ function openTopic(topicId) {
     
     html += '</div>';
     
-    // Форма ответа только для админов
-    if (user.role === 'admin') {
+    // Форма ответа для админов и основателя
+    if (user.role === 'admin' || user.role === 'founder') {
         html += `
             <div class="reply-form">
                 <h3>Ответить</h3>
@@ -171,7 +171,7 @@ function openTopic(topicId) {
         html += `
             <div class="reply-form">
                 <p style="color: var(--text-secondary); text-align: center; padding: 1rem;">
-                    Только администраторы могут отвечать на темы
+                    Только администраторы и основатель могут отвечать на темы
                 </p>
             </div>
         `;
@@ -189,8 +189,8 @@ function addReply(event, topicId) {
     event.preventDefault();
     
     const user = getCurrentUser();
-    if (user.role !== 'admin') {
-        alert('Только администраторы могут отвечать на темы!');
+    if (user.role !== 'admin' && user.role !== 'founder') {
+        alert('Только администраторы и основатель могут отвечать на темы!');
         return;
     }
     
@@ -216,8 +216,8 @@ function addReply(event, topicId) {
 // Показать форму создания темы
 function showCreateTopicForm() {
     const user = getCurrentUser();
-    if (user.role !== 'admin') {
-        alert('Только администраторы могут создавать темы!');
+    if (user.role !== 'admin' && user.role !== 'founder') {
+        alert('Только администраторы и основатель могут создавать темы!');
         return;
     }
     document.getElementById('createTopicModal').style.display = 'block';
@@ -228,8 +228,8 @@ function createTopic(event) {
     event.preventDefault();
     
     const user = getCurrentUser();
-    if (user.role !== 'admin') {
-        alert('Только администраторы могут создавать темы!');
+    if (user.role !== 'admin' && user.role !== 'founder') {
+        alert('Только администраторы и основатель могут создавать темы!');
         return;
     }
     
@@ -280,10 +280,11 @@ document.addEventListener('DOMContentLoaded', initForum);
 
 // Обновить информацию о пользователе
 function updateUserInfo(user) {
+    const roleText = user.role === 'founder' ? '⭐ Основатель' : user.role === 'admin' ? '👑 Администратор' : '🎮 Игрок';
     const userInfoHTML = `
         <div class="user-info">
             <span>👤 ${user.nickname}</span>
-            <span class="user-role">${user.role === 'admin' ? '👑 Администратор' : '🎮 Игрок'}</span>
+            <span class="user-role">${roleText}</span>
             <button class="btn btn-secondary" onclick="logout()">Выход</button>
         </div>
     `;
