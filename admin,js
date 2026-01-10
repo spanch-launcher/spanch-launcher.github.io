@@ -6,8 +6,8 @@ function checkAdminAccess() {
         window.location.href = 'auth.html';
         return null;
     }
-    if (currentUser.role !== 'admin') {
-        alert('Доступ запрещен! Только для администраторов.');
+    if (currentUser.role !== 'admin' && currentUser.role !== 'founder') {
+        alert('Доступ запрещен! Только для администраторов и основателя.');
         window.location.href = 'index.html';
         return null;
     }
@@ -26,9 +26,9 @@ function loadUsers() {
     
     let html = '';
     users.forEach(user => {
-        const roleIcon = user.role === 'admin' ? '👑' : '🎮';
-        const roleName = user.role === 'admin' ? 'Администратор' : 'Игрок';
-        const roleClass = user.role === 'admin' ? 'role-admin' : 'role-player';
+        const roleIcon = user.role === 'founder' ? '⭐' : user.role === 'admin' ? '👑' : '🎮';
+        const roleName = user.role === 'founder' ? 'Основатель' : user.role === 'admin' ? 'Администратор' : 'Игрок';
+        const roleClass = user.role === 'founder' ? 'role-founder' : user.role === 'admin' ? 'role-admin' : 'role-player';
         
         html += `
             <tr>
@@ -114,11 +114,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!admin) return;
     
     // Показываем информацию об администраторе
+    const roleText = admin.role === 'founder' ? '⭐ Основатель' : '👑 Администратор';
     const navButtons = document.getElementById('navButtons');
     navButtons.innerHTML = `
         <div class="user-info">
             <span>👤 ${admin.nickname}</span>
-            <span class="user-role">👑 Администратор</span>
+            <span class="user-role">${roleText}</span>
             <button class="btn btn-secondary" onclick="logout()">Выход</button>
         </div>
     `;
