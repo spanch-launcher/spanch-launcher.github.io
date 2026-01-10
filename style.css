@@ -104,22 +104,10 @@ body {
 }
 
 .logo-img {
-    height: 50px;
+    height: 40px;
     width: auto;
     object-fit: contain;
-}
-
-.logo h1 {
-    font-size: 1.75rem;
-    background: var(--gradient-1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.logo span {
-    color: var(--text-secondary);
-    font-size: 0.8rem;
+    max-width: 150px;
 }
 
 .nav-menu {
