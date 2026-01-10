@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форум - NLRP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>NLRP</h1>
+                <span>Next Live Role Play</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Главная</a></li>
+                <li><a href="index.html#about">О сервере</a></li>
+                <li><a href="index.html#features">Особенности</a></li>
+                <li><a href="forum.html">Форум</a></li>
+                <li><a href="index.html#rules">Правила</a></li>
+                <li><a href="index.html#donate">Донат</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="index.html#play" class="btn btn-primary">Играть</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Форум Hero -->
+    <section class="forum-hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <h1 class="hero-title">Форум NLRP</h1>
+            <p class="hero-subtitle">Общайся с игроками, делись опытом и находи новых друзей</p>
+        </div>
+    </section>
+
+    <!-- Категории форума -->
+    <section class="forum-categories">
+        <div class="container">
+            <div class="forum-header">
+                <h2 class="section-title">Категории форума</h2>
+                <button class="btn btn-primary" onclick="showCreateTopicForm()">+ Создать тему</button>
+            </div>
+            
+            <div class="category-list" id="categoryList">
+                <!-- Категории будут загружены через JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно для создания темы -->
+    <div id="createTopicModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Создать новую тему</h2>
+            <form id="createTopicForm" onsubmit="createTopic(event)">
+                <div class="form-group">
+                    <label for="authorName">Ваш ник *</label>
+                    <input type="text" id="authorName" required>
+                </div>
+                <div class="form-group">
+                    <label for="topicCategory">Категория *</label>
+                    <select id="topicCategory" required>
+                        <option value="general">💬 Общие обсуждения</option>
+                        <option value="team">🤝 Поиск команды</option>
+                        <option value="factions">🏢 Фракции и организации</option>
+                        <option value="trade">💼 Торговля</option>
+                        <option value="creative">🎨 Творчество</option>
+                        <option value="help">❓ Вопросы и помощь</option>
+                        <option value="bugs">🐛 Баги и предложения</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="topicTitle">Заголовок *</label>
+                    <input type="text" id="topicTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="topicMessage">Сообщение *</label>
+                    <textarea id="topicMessage" rows="6" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Создать</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Просмотр категории -->
+    <div id="categoryView" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeCategoryView()">&times;</span>
+            <div id="categoryContent"></div>
+        </div>
+    </div>
+
+    <!-- Просмотр темы -->
+    <div id="topicView" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeTopicView()">&times;</span>
+            <div id="topicContent"></div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NLRP</h3>
+                    <p>Лучший ролевой сервер GTA V</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Ссылки</h4>
+                    <ul>
+                        <li><a href="index.html#home">Главная</a></li>
+                        <li><a href="index.html#about">О сервере</a></li>
+                        <li><a href="index.html#rules">Правила</a></li>
+                        <li><a href="index.html#donate">Донат</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Сообщество</h4>
+                    <ul>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">VK</a></li>
+                        <li><a href="#">Telegram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Поддержка</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="forum.html">Форум</a></li>
+                        <li><a href="#">Тикеты</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NLRP. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="forum.js"></script>
+</body>
+</html>
