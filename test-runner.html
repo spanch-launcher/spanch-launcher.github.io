@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Storage Tests</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        #test-output {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .passed {
+            color: #4ec9b0;
+        }
+        .failed {
+            color: #f48771;
+        }
+        button {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+    </style>
+</head>
+<body>
+    <h1>Category Storage Property-Based Tests</h1>
+    <button onclick="runTests()">Run Tests</button>
+    <div id="test-output">Click "Run Tests" to start...</div>
+
+    <script src="categoryStorage.js"></script>
+    <script>
+        // Override console.log to display in the page
+        const outputDiv = document.getElementById('test-output');
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        console.log = function(...args) {
+            const message = args.join(' ');
+            const span = document.createElement('span');
+            if (message.includes('✓')) {
+                span.className = 'passed';
+            } else if (message.includes('✗')) {
+                span.className = 'failed';
+            }
+            span.textContent = message + '\n';
+            outputDiv.appendChild(span);
+            originalLog.apply(console, args);
+        };
+        
+        console.error = function(...args) {
+            const message = args.join(' ');
+            const span = document.createElement('span');
+            span.className = 'failed';
+            span.textContent = message + '\n';
+            outputDiv.appendChild(span);
+            originalError.apply(console, args);
+        };
+
+        function runTests() {
+            outputDiv.innerHTML = '';
+            
+            // Load and run tests
+            const script = document.createElement('script');
+            script.src = 'categoryStorage.test.js';
+            script.onload = function() {
+                console.log('\nTests completed!');
+            };
+            script.onerror = function() {
+                console.error('Error loading test file');
+            };
+            document.body.appendChild(script);
+        }
+    </script>
+</body>
+</html>

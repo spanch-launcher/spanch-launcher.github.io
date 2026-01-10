@@ -32,7 +32,33 @@
     <section class="admin-panel">
         <div class="container">
             <h1 class="section-title">Панель администратора</h1>
-            <p class="section-subtitle">Управление пользователями и их ролями</p>
+            <p class="section-subtitle">Управление пользователями и категориями форума</p>
+
+            <!-- Управление категориями -->
+            <div class="admin-content">
+                <div class="admin-header">
+                    <h2>Управление категориями</h2>
+                    <button class="btn btn-primary" onclick="showCreateCategoryModal()">+ Создать категорию</button>
+                </div>
+
+                <div class="categories-table">
+                    <table id="categoriesTable">
+                        <thead>
+                            <tr>
+                                <th>Иконка</th>
+                                <th>Название</th>
+                                <th>Описание</th>
+                                <th>Тем</th>
+                                <th>Сообщений</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoriesTableBody">
+                            <!-- Категории будут загружены через JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <!-- Список пользователей -->
             <div class="admin-content">
@@ -85,6 +111,59 @@
         </div>
     </div>
 
+    <!-- Модальное окно для создания категории -->
+    <div id="createCategoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCategoryModal()">&times;</span>
+            <h2>Создать новую категорию</h2>
+            <form id="createCategoryForm" onsubmit="createCategoryFromForm(event)">
+                <div class="form-group">
+                    <label for="categoryName">Название категории *</label>
+                    <input type="text" id="categoryName" required placeholder="Например: 💬 Общие обсуждения">
+                </div>
+                <div class="form-group">
+                    <label for="categoryIcon">Иконка (emoji) *</label>
+                    <input type="text" id="categoryIcon" required placeholder="Например: 💬" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label for="categoryDescription">Описание *</label>
+                    <textarea id="categoryDescription" rows="3" required placeholder="Краткое описание категории"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Создать</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeCategoryModal()">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно для редактирования категории -->
+    <div id="editCategoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditCategoryModal()">&times;</span>
+            <h2>Редактировать категорию</h2>
+            <form id="editCategoryForm" onsubmit="editCategoryFromForm(event)">
+                <input type="hidden" id="editCategoryId">
+                <div class="form-group">
+                    <label for="editCategoryName">Название категории *</label>
+                    <input type="text" id="editCategoryName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editCategoryIcon">Иконка (emoji) *</label>
+                    <input type="text" id="editCategoryIcon" required maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label for="editCategoryDescription">Описание *</label>
+                    <textarea id="editCategoryDescription" rows="3" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeEditCategoryModal()">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Футер -->
     <footer class="footer">
         <div class="container">
@@ -126,6 +205,7 @@
         </div>
     </footer>
 
+    <script src="categoryStorage.js"></script>
     <script src="admin.js"></script>
 </body>
 </html>

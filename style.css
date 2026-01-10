@@ -1251,3 +1251,240 @@ html {
     background: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #48dbfb 100%);
     color: white;
 }
+
+
+/* Category Management Styles */
+.categories-table {
+    margin-top: 2rem;
+    overflow-x: auto;
+}
+
+.categories-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.categories-table thead {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.categories-table th,
+.categories-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.categories-table th {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.categories-table td {
+    color: var(--text-primary);
+}
+
+.categories-table tr:last-child td {
+    border-bottom: none;
+}
+
+.categories-table tr:hover {
+    background: rgba(99, 102, 241, 0.05);
+}
+
+/* Category Form Styles */
+#createCategoryModal .modal-content,
+#editCategoryModal .modal-content {
+    max-width: 600px;
+}
+
+#createCategoryForm .form-group,
+#editCategoryForm .form-group {
+    margin-bottom: 1.5rem;
+}
+
+#createCategoryForm label,
+#editCategoryForm label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+#createCategoryForm input,
+#createCategoryForm textarea,
+#editCategoryForm input,
+#editCategoryForm textarea {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--dark-bg);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+#createCategoryForm input:focus,
+#createCategoryForm textarea:focus,
+#editCategoryForm input:focus,
+#editCategoryForm textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+#createCategoryForm textarea,
+#editCategoryForm textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Protected Category Badge */
+.role-badge.role-founder {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+/* Button Styles for Category Management */
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    margin-right: 0.5rem;
+}
+
+.btn-small:last-child {
+    margin-right: 0;
+}
+
+/* Admin Content Spacing */
+.admin-content {
+    margin-bottom: 3rem;
+}
+
+.admin-content:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive Design for Category Management */
+@media (max-width: 768px) {
+    .categories-table {
+        font-size: 0.875rem;
+    }
+    
+    .categories-table th,
+    .categories-table td {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .btn-small {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* User Info Styles */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-role {
+    padding: 0.5rem 1rem;
+    background: rgba(99, 102, 241, 0.2);
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+
+/* Hero Characters */
+.hero-character {
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.hero-character img {
+    height: 600px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+}
+
+.hero-character-left {
+    left: -50px;
+    animation: slideInLeft 1s ease-out;
+}
+
+.hero-character-right {
+    right: -50px;
+    animation: slideInRight 1s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments for characters */
+@media (max-width: 1400px) {
+    .hero-character img {
+        height: 500px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .hero-character img {
+        height: 400px;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-character img {
+        height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-character {
+        display: none;
+    }
+}
+
+/* Ensure hero content is above characters */
+.hero-content {
+    position: relative;
+    z-index: 3;
+}

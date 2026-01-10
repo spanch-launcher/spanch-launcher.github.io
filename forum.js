@@ -1,13 +1,4 @@
-// Данные форума
-const forumCategories = {
-    general: { name: '💬 Общие обсуждения', icon: '💬', description: 'Обсуждай игровые механики, делись советами и стратегиями' },
-    team: { name: '🤝 Поиск команды', icon: '🤝', description: 'Найди напарников для совместной игры' },
-    factions: { name: '🏢 Фракции и организации', icon: '🏢', description: 'Обсуждения фракций, набор участников' },
-    trade: { name: '💼 Торговля', icon: '💼', description: 'Покупка и продажа имущества, транспорта' },
-    creative: { name: '🎨 Творчество', icon: '🎨', description: 'Скриншоты, видео, истории из игры' },
-    help: { name: '❓ Вопросы и помощь', icon: '❓', description: 'Задай вопрос или помоги другим игрокам' },
-    bugs: { name: '🐛 Баги и предложения', icon: '🐛', description: 'Сообщи о баге или предложи улучшение' }
-};
+// Categories are now managed dynamically through categoryStorage.js
 
 // Проверка авторизации
 function checkAuth() {
@@ -36,11 +27,11 @@ function initForum() {
     const user = checkAuth();
     if (!user) return;
     
+    // Initialize categories (creates default "Общие правила" if none exist)
+    initializeCategories();
+    
     // Показываем информацию о пользователе
     updateUserInfo(user);
-    
-    // НЕ очищаем темы - админ сам будет добавлять
-    // localStorage.setItem('forumTopics', JSON.stringify([]));
     
     loadCategories();
 }
@@ -50,14 +41,17 @@ function loadCategories() {
     const topics = JSON.parse(localStorage.getItem('forumTopics')) || [];
     const categoryList = document.getElementById('categoryList');
     
+    // Load categories from storage
+    const categories = getCategories();
+    
     let html = '';
-    for (const [key, category] of Object.entries(forumCategories)) {
-        const categoryTopics = topics.filter(t => t.category === key);
+    categories.forEach(category => {
+        const categoryTopics = topics.filter(t => t.category === category.key);
         const topicCount = categoryTopics.length;
         const replyCount = categoryTopics.reduce((sum, t) => sum + (t.replies?.length || 0), 0);
         
         html += `
-            <div class="category-item" onclick="openCategory('${key}')">
+            <div class="category-item" onclick="openCategory('${category.key}')">
                 <div class="category-header">
                     <div class="category-info">
                         <div class="category-icon">${category.icon}</div>
@@ -73,14 +67,19 @@ function loadCategories() {
                 </div>
             </div>
         `;
-    }
+    });
     
     categoryList.innerHTML = html;
 }
 
 // Открыть категорию
 function openCategory(categoryKey) {
-    const category = forumCategories[categoryKey];
+    const category = getCategoryByKey(categoryKey);
+    if (!category) {
+        alert('Категория не найдена');
+        return;
+    }
+    
     const topics = JSON.parse(localStorage.getItem('forumTopics')) || [];
     const categoryTopics = topics.filter(t => t.category === categoryKey);
     
@@ -220,6 +219,19 @@ function showCreateTopicForm() {
         alert('Только администраторы и основатель могут создавать темы!');
         return;
     }
+    
+    // Populate category dropdown dynamically
+    const categorySelect = document.getElementById('topicCategory');
+    const categories = getCategories();
+    
+    categorySelect.innerHTML = '';
+    categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.key;
+        option.textContent = category.name;
+        categorySelect.appendChild(option);
+    });
+    
     document.getElementById('createTopicModal').style.display = 'block';
 }
 
