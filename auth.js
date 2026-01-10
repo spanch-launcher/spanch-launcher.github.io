@@ -2,13 +2,13 @@
 function initUsers() {
     let users = JSON.parse(localStorage.getItem('forumUsers')) || [];
     
-    // Создаем админа, если его нет
+    // Создаем основателя, если его нет
     if (!users.find(u => u.username === 'admin')) {
         users.push({
-            username: 'MikhailArzu',
+            username: 'admin',
             password: 'admin123',
-            nickname: 'Администратор',
-            role: 'admin',
+            nickname: 'Основатель',
+            role: 'founder',
             registeredAt: new Date().toLocaleString('ru-RU')
         });
         localStorage.setItem('forumUsers', JSON.stringify(users));
