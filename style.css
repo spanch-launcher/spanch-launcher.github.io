@@ -104,10 +104,10 @@ body {
 }
 
 .logo-img {
-    height: 40px;
+    height: 35px;
     width: auto;
     object-fit: contain;
-    max-width: 150px;
+    max-width: 120px;
 }
 
 .nav-menu {
