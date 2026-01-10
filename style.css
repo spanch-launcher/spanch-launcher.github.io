@@ -28,7 +28,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -49,6 +49,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
 }
 
 .logo {
@@ -73,7 +74,8 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 3rem;
+    gap: 2.5rem;
+    flex-wrap: nowrap;
 }
 
 .nav-menu a {
@@ -85,6 +87,14 @@ body {
 
 .nav-menu a:hover {
     color: var(--primary-color);
+}
+
+/* Навигационные кнопки */
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
 }
 
 /* Кнопки */
