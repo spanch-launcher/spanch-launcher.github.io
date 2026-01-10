@@ -1110,3 +1110,125 @@ html {
         align-items: stretch;
     }
 }
+
+
+/* Панель администратора */
+.admin-panel {
+    min-height: 100vh;
+    padding: 8rem 0 4rem;
+    background: var(--darker-bg);
+}
+
+.admin-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    margin-top: 2rem;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(99, 102, 241, 0.2);
+}
+
+.admin-header h2 {
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* Таблица пользователей */
+.users-table {
+    overflow-x: auto;
+}
+
+#usersTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#usersTable thead {
+    background: var(--darker-bg);
+}
+
+#usersTable th {
+    padding: 1rem;
+    text-align: left;
+    color: var(--text-primary);
+    font-weight: 600;
+    border-bottom: 2px solid rgba(99, 102, 241, 0.3);
+}
+
+#usersTable td {
+    padding: 1rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+#usersTable tbody tr {
+    transition: background 0.3s;
+}
+
+#usersTable tbody tr:hover {
+    background: var(--darker-bg);
+}
+
+/* Бейджи ролей */
+.role-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.role-admin {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #000;
+}
+
+.role-player {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Маленькие кнопки */
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* Форма изменения роли */
+.role-form {
+    padding: 1rem 0;
+}
+
+.role-form p {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.role-form strong {
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .users-table {
+        font-size: 0.9rem;
+    }
+    
+    #usersTable th,
+    #usersTable td {
+        padding: 0.75rem 0.5rem;
+    }
+}
